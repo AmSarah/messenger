@@ -15,7 +15,7 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState({});
     const [showGroupModal, setShowGroupModal] = useState(false);
-    const { on } = useEventBus();
+    const { emit, on } = useEventBus();
 
     const isUserOnline = (userId) => onlineUsers[userId];
 
@@ -74,9 +74,8 @@ const ChatLayout = ({ children }) => {
             });
             emit("toast.show", `Group ${name} was deleted`);
             if (
-                selectedConversation &&
-                selectedConversation.is_group &&
-                selectedConversation.id == id
+                !selectedConversation ||
+                (selectedConversation.is_group && selectedConversation.id == id)
             ) {
                 router.visit(route("dashboard"));
             }

@@ -5,7 +5,7 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
     const audioRef = useRef();
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
-    const [druation, setDruation] = useState(0);
+    const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
     const togglePlayPause = () => {
@@ -14,7 +14,7 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
             audio.pause();
         } else {
             console.log(audio, audio.duration);
-            setDruation(audio.duration);
+            setDuration(audio.duration);
             audio.play();
         }
         setIsPlaying(!isPlaying);
@@ -28,12 +28,12 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
 
     const handleTimeUpdate = (e) => {
         const audio = audioRef.current;
-        setDruation(audio.druation);
+        setDuration(audio.duration);
         setCurrentTime(e.target.currentTime);
     };
 
     const handleLoadedMetadata = (e) => {
-        setDruation(e.target.duration);
+        setDuration(e.target.duration);
     };
 
     const handleSeekChange = (e) => {
@@ -70,7 +70,7 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
                 type="range"
                 className="flex-1"
                 min="0"
-                max={audioRef.duration}
+                max={duration}
                 step="0.01"
                 value={currentTime}
                 onChange={handleSeekChange}

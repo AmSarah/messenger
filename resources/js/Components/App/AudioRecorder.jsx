@@ -2,7 +2,7 @@ import { MicrophoneIcon, StopCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
 const AudioRecorder = ({ fileReady }) => {
-    const [mediaRecorder, setMediaRecorder] = useState(false);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
     const [recording, setRecording] = useState(false);
     const onMicrophoneClick = async () => {
         if (recording) {
@@ -29,13 +29,9 @@ const AudioRecorder = ({ fileReady }) => {
                 let audioBlob = new Blob(chunks, {
                     type: "audio/ogg; codecs=opus",
                 });
-                let audioFile = new fileReady(
-                    [audioBlob],
-                    "recorded_audio.ogg",
-                    {
-                        type: "audio/ogg; codecs=opus",
-                    }
-                );
+                let audioFile = new File([audioBlob], "recorded_audio.ogg", {
+                    type: "audio/ogg; codecs=opus",
+                });
 
                 const url = URL.createObjectURL(audioFile);
                 fileReady(audioFile, url);

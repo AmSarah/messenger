@@ -27,7 +27,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
     const createOrUpdateGroup = (e) => {
         e.preventDefault();
         if (group.id) {
-            put(route("group.update", group_id), {
+            put(route("group.update", group.id), {
                 onSuccess: () => {
                     closeModal();
                     emit("toast.show", `Group "${data.name}" was updated`);

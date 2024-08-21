@@ -56,6 +56,10 @@ const MessageInput = ({ conversation = null }) => {
         const formData = new FormData();
 
         chosenFiles.forEach((file) => {
+            console.log("File Name:", file.file.name);
+            console.log("File Size:", file.file.size);
+            console.log("File MIME Type:", file.file.type);
+
             formData.append("attachments[]", file.file);
         });
         formData.append("message", newMessage);

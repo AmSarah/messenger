@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SocketMessage;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Support\Str;
+use App\Models\Conversation;
 use Illuminate\Http\Request;
+use App\Events\SocketMessage;
+use App\Models\MessageAttachment;
+use Illuminate\Support\Facades\Log;
 use App\Http\Resources\MessageResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreMessageRequest;
-use App\Models\Conversation;
-use App\Models\MessageAttachment;
 
 class MessageController extends Controller
 {
@@ -63,6 +64,7 @@ class MessageController extends Controller
 
     public function store(StoreMessageRequest $request){
         $data= $request->validated();
+        Log::error('Validation Errors:', $request->errors());
 
         $data['sender_id'] = auth()->id();
         $receiverId = $data['receiver_id'] ?? null;
@@ -121,9 +123,9 @@ class MessageController extends Controller
 
      
         $message->delete();
+        $lastMessage = null;
 
-
-
+ 
         if($group){
             //repoplute group with latestest database data
             $group = Group::find($group->id);

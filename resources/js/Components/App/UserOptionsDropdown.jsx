@@ -9,8 +9,10 @@ import {
     UserIcon,
 } from "@heroicons/react/24/solid";
 import axios from "axios";
+import { useEventBus } from "@/EventBus";
 
 export default function UserOptionsDropdown({ conversation }) {
+    const { emit } = useEventBus();
     const changeUserRole = () => {
         console.log("Change user role");
         if (!conversation.is_user) {
@@ -20,6 +22,7 @@ export default function UserOptionsDropdown({ conversation }) {
         axios
             .post(route("user.changeRole", conversation.id))
             .then((res) => {
+                emit("toast.show", res.data.message);
                 console.log(res.data);
             })
             .catch((err) => {
@@ -35,6 +38,7 @@ export default function UserOptionsDropdown({ conversation }) {
         axios
             .post(route("user.blockUnblock", conversation.id))
             .then((res) => {
+                emit("toast.show", res.data.message);
                 console.log(res.data);
             })
             .catch((err) => {
@@ -76,13 +80,13 @@ export default function UserOptionsDropdown({ conversation }) {
                                                 : "text-gray-100"
                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
-                                        {conversation.block_at && (
+                                        {conversation.blocked_at && (
                                             <>
                                                 <LockOpenIcon className="w-4 h-4 mr-2" />
                                                 Unblock User
                                             </>
                                         )}
-                                        {!conversation.block_at && (
+                                        {!conversation.blocked_at && (
                                             <>
                                                 <LockClosedIcon className="w-4 h-4 mr-2" />
                                                 Block User

@@ -68,7 +68,7 @@ export default function AttachmentPreviewModel({
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
-                            enterFrom="opacity-0 translate-y-4 sm:translate=y-0 sm:scale-95"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             enterTo="duration-100 translate-y-0 sm:scale-100"
                             leave="ease-in duration-200"
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
@@ -83,7 +83,7 @@ export default function AttachmentPreviewModel({
                                     onClick={close}
                                     className="absolute right-3 top-3 w-10 h-10 rounded-full 
                                 :hover:bg-black/10 transition flex items-center
-                                justify-ceneter text-gray-100 z-40"
+                                justify-center text-gray-100 z-40"
                                 >
                                     <XMarkIcon className="w-6 h-6 " />
                                 </button>
@@ -133,7 +133,7 @@ export default function AttachmentPreviewModel({
                                                 <audio
                                                     src={attachment.url}
                                                     controls
-                                                    auto-play
+                                                    autoPlay
                                                 ></audio>
                                             )}
                                             {isPDF(attachment) && (

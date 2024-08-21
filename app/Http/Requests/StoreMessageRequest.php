@@ -25,9 +25,17 @@ class StoreMessageRequest extends FormRequest
             'message' => 'nullable|string',
             'group_id'=> 'required_without:receiver_id|nullable|exists:groups,id',
             'receiver_id'=>'required_without:group_id|nullable|exists:users,id',
-            'attachments'=>'nullable|array|max:10',
-            'attachments.*' => 'file|max:102400',
+           'attachments'=>'nullable|array|max:10',
+'attachments.*' => 'file|mimes:jpg,jpeg,png,mp4,avi,mov,wav,mp3|max:102400',
             
         ];
     }
+    public function messages()
+    {
+        return [
+            'attachments.*.mimes' => 'Only jpg, jpeg, png, mp4, avi, mov, wav, and mp3 files are allowed.',
+            'attachments.*.max' => 'Each file must be less than 100MB.',
+        ];
+    }
+    
 }
